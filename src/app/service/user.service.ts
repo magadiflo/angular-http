@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { User } from '../interface/user';
@@ -15,7 +15,12 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.apiUrl}/users`);
+    //* Las instancias de los headers son INMUTABLES
+    let myHeaders = new HttpHeaders({ 'myHeader': 'headervalue' });
+    //* Así que si queremos enviar más encabezados debemos hacer lo siguiente
+    myHeaders = myHeaders.set('id', '12345'); //*set, Si existe la cabecera (id), sobreescribe su valor, caso contrario crea la cabecera y su valor
+    myHeaders = myHeaders.append('id', '0000');//*append, Si existe la cabecera (id), concatena su valor, caso contrario crea la cabecera y su valor
+    return this.http.get<User[]>(`${this.apiUrl}/users`, { headers: myHeaders });
   }
 
   getUser(): Observable<User> {

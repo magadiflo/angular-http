@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpEventType } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { User } from './interface/user';
@@ -45,7 +46,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.onGetUsers();
-    this.onDeleteUser();
+    //this.onDeleteUser();
     //this.onPatchUser();
     //this.onUpdateUser();
     //this.onGetUser();
@@ -101,6 +102,31 @@ export class AppComponent implements OnInit {
     this.userService.deleteUser(5)
       .subscribe({
         next: response => console.log(response),
+        error: err => console.log(err),
+        complete: () => console.log('Done deleting user')
+      });
+  }
+
+  onUploadFile(files: File[]): void {
+    const formData = new FormData(); //*FormData, representación programática de un formulario
+    for (const file of files) {
+      formData.append('files', file, file.name);//* 'files', nombre con que se recibirá en el backend
+    }
+
+
+    this.userService.uploadFiles(formData)
+      .subscribe({
+        next: event => {
+          switch (event.type) {
+            case HttpEventType.UploadProgress || HttpEventType.DownloadProgress:
+              console.log(event);
+              break;
+            case HttpEventType.Response:
+              console.log(event);
+              break;
+
+          }
+        },
         error: err => console.log(err),
         complete: () => console.log('Done deleting user')
       });

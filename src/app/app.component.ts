@@ -13,7 +13,7 @@ import { UserService } from './service/user.service';
 export class AppComponent implements OnInit {
 
   private user: User = {
-    'id': 5,
+    'id': 2,
     'name': 'Martín Díaz',
     'username': 'martin',
     'email': 'martin_DF@april.biz',
@@ -36,11 +36,17 @@ export class AppComponent implements OnInit {
     }
   }
 
+  private userToUpdate: any = {
+    'id': 2,
+    'name': 'Gaspar Flores'
+  }
+
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    this.onUpdateUser();
+    this.onPatchUser();
     this.onGetUsers();
+    //this.onUpdateUser();
     //this.onGetUser();
     //this.onCreateUser();
   }
@@ -78,6 +84,15 @@ export class AppComponent implements OnInit {
         next: user => console.log(user),
         error: err => console.log(err),
         complete: () => console.log('Done updating user')
+      });
+  }
+
+  onPatchUser(): void {
+    this.userService.patchUser(this.userToUpdate)
+      .subscribe({
+        next: user => console.log(user),
+        error: err => console.log(err),
+        complete: () => console.log('Done patching user')
       });
   }
 

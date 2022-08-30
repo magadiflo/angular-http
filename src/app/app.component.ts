@@ -13,9 +13,10 @@ import { UserService } from './service/user.service';
 export class AppComponent implements OnInit {
 
   private user: User = {
+    'id': 5,
     'name': 'Martín Díaz',
     'username': 'martin',
-    'email': 'martin@april.biz',
+    'email': 'martin_DF@april.biz',
     'address': {
       'street': 'Perú Kulas Light',
       'suite': 'Apt. 556',
@@ -29,7 +30,7 @@ export class AppComponent implements OnInit {
     'phone': '5-555-736-8031 x56442',
     'website': 'martin.hildegard.org',
     'company': {
-      'name': 'Martin Romaguera-Crona',
+      'name': 'Google',
       'catchPhrase': 'Multi-layered client-server neural-net',
       'bs': 'harness real-time e-markets'
     }
@@ -38,9 +39,10 @@ export class AppComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
+    this.onUpdateUser();
     this.onGetUsers();
     //this.onGetUser();
-    this.onCreateUser();
+    //this.onCreateUser();
   }
 
   onGetUsers(): void {
@@ -67,6 +69,15 @@ export class AppComponent implements OnInit {
         next: user => console.log(user),
         error: err => console.log(err),
         complete: () => console.log('Done creating user')
+      });
+  }
+
+  onUpdateUser(): void {
+    this.userService.updateUser(this.user)
+      .subscribe({
+        next: user => console.log(user),
+        error: err => console.log(err),
+        complete: () => console.log('Done updating user')
       });
   }
 

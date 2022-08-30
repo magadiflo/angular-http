@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { User } from './interface/user';
+
 import { UserService } from './service/user.service';
 
 @Component({
@@ -10,17 +12,41 @@ import { UserService } from './service/user.service';
 })
 export class AppComponent implements OnInit {
 
+  private user: User = {
+    'name': 'Martín Díaz',
+    'username': 'martin',
+    'email': 'martin@april.biz',
+    'address': {
+      'street': 'Perú Kulas Light',
+      'suite': 'Apt. 556',
+      'city': 'Gwenborough',
+      'zipcode': '92998-3874',
+      'geo': {
+        'lat': '-99.9999',
+        'lng': '81.1496'
+      }
+    },
+    'phone': '5-555-736-8031 x56442',
+    'website': 'martin.hildegard.org',
+    'company': {
+      'name': 'Martin Romaguera-Crona',
+      'catchPhrase': 'Multi-layered client-server neural-net',
+      'bs': 'harness real-time e-markets'
+    }
+  }
+
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
     this.onGetUsers();
-    this.onGetUser();
+    //this.onGetUser();
+    this.onCreateUser();
   }
 
   onGetUsers(): void {
     this.userService.getUsers()
       .subscribe({
-        next: users => console.log(users),
+        next: users => console.table(users),
         error: err => console.log(err),
         complete: () => console.log('Done getting users')
       });
@@ -32,6 +58,15 @@ export class AppComponent implements OnInit {
         next: user => console.log(user),
         error: err => console.log(err),
         complete: () => console.log('Done getting user')
+      });
+  }
+
+  onCreateUser(): void {
+    this.userService.createUser(this.user)
+      .subscribe({
+        next: user => console.log(user),
+        error: err => console.log(err),
+        complete: () => console.log('Done creating user')
       });
   }
 

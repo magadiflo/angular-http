@@ -44,8 +44,9 @@ export class AppComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    this.onPatchUser();
     this.onGetUsers();
+    this.onDeleteUser();
+    //this.onPatchUser();
     //this.onUpdateUser();
     //this.onGetUser();
     //this.onCreateUser();
@@ -54,7 +55,7 @@ export class AppComponent implements OnInit {
   onGetUsers(): void {
     this.userService.getUsers()
       .subscribe({
-        next: users => console.table(users),
+        next: users => console.log(users),
         error: err => console.log(err),
         complete: () => console.log('Done getting users')
       });
@@ -93,6 +94,15 @@ export class AppComponent implements OnInit {
         next: user => console.log(user),
         error: err => console.log(err),
         complete: () => console.log('Done patching user')
+      });
+  }
+
+  onDeleteUser(): void {
+    this.userService.deleteUser(5)
+      .subscribe({
+        next: response => console.log(response),
+        error: err => console.log(err),
+        complete: () => console.log('Done deleting user')
       });
   }
 

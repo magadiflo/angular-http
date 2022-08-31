@@ -14,6 +14,17 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * * Observable: es el emisor, el que dice "oye tengo datos, hagan algo" a los
+   * * observers (donde se realizó la subscripción). Es decir, es el que está
+   * * emitiendo los datos.
+   * 
+   * * Los observables son declarativos, es decir, se define una función para publicar valores, 
+   * * pero no se ejecuta hasta que un consumidor se suscribe a ella. El consumidor suscrito recibe 
+   * * notificaciones hasta que se completa la función o hasta que se da de baja.
+   * @returns 
+   */
+
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.apiUrl}/users`);
   }

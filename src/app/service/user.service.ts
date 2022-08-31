@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpEvent, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 import { User } from '../interface/user';
 import { environment } from '../../environments/environment';
@@ -79,5 +79,14 @@ export class UserService {
   downloadFile(): Observable<HttpResponse<Blob>> {
     return this.http.get(`assets/text.txt`, { responseType: 'blob', observe: 'response' });
   }
+
+  //*********** RxJS Operators ***********/
+  getUsersRxJS(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/users`)
+      .pipe(
+        tap(users => console.log(users))
+      );
+  }
+  
 
 }

@@ -47,7 +47,9 @@ export class AppComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    this.onTextFile();
+    this.onGetUsersRxJS();
+
+    //this.onTextFile();
     //this.onGetUsers();
     //this.onDeleteUser();
     //this.onPatchUser();
@@ -147,6 +149,16 @@ export class AppComponent implements OnInit {
         next: response => console.log('Response: ', response),
         error: err => console.log(err),
         complete: () => console.log('Done getting text file')
+      });
+  }
+
+  //*********** Llamando a funciones con RxJS Operators ***********/
+  onGetUsersRxJS(): void {
+    this.userService.getUsersRxJS()
+      .subscribe({
+        next: users => console.log(users),
+        error: err => console.log(err),
+        complete: () => console.log('Done getting users with rxjs operators')
       });
   }
 

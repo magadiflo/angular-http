@@ -1,0 +1,6 @@
+<form>
+    <label for="file">Selecciona archivo</label>
+    <div>
+        <input type="file" multiple (change)="onUploadFile($any($event.target).files)" id="file">
+    </div>
+</form>

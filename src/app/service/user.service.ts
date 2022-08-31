@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams, HttpEvent } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams, HttpEvent, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { User } from '../interface/user';
@@ -59,6 +59,14 @@ export class UserService {
   uploadFiles(formData: FormData): Observable<HttpEvent<string[]>> {
     return this.http.post<string[]>(`http://127.0.0.1:9000/file/upload`, formData,
       { observe: 'events', reportProgress: true });
+  }
+
+  getTextFile(): Observable<string> {
+    return this.http.get(`assets/text.txt`, { responseType: 'text' });
+  }
+
+  downloadFile(): Observable<HttpResponse<Blob>> {
+    return this.http.get(`assets/text.txt`, { responseType: 'blob', observe: 'response' });
   }
 
 }

@@ -47,7 +47,8 @@ export class AppComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    this.onGetUsers();
+    this.onTextFile();
+    //this.onGetUsers();
     //this.onDeleteUser();
     //this.onPatchUser();
     //this.onUpdateUser();
@@ -137,6 +138,15 @@ export class AppComponent implements OnInit {
         },
         error: err => console.log(err),
         complete: () => console.log('Done files upload')
+      });
+  }
+
+  onTextFile(): void {
+    this.userService.getTextFile()
+      .subscribe({
+        next: response => console.log('Response: ', response),
+        error: err => console.log(err),
+        complete: () => console.log('Done getting text file')
       });
   }
 

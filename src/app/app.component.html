@@ -1,3 +1,6 @@
+<label for="file-progress">File progress</label>
+<progress *ngIf="fileStatus.status === 'progress'" id="file-progress" max="100" [value]="fileStatus.percentage"></progress>
+<br>
 <form>
     <label for="file">Selecciona archivo</label>
     <div>

@@ -13,6 +13,8 @@ import { UserService } from './service/user.service';
 })
 export class AppComponent implements OnInit {
 
+  fileStatus = { status: '', percentage: 0 };
+
   private user: User = {
     'id': 2,
     'name': 'Martín Díaz',
@@ -119,12 +121,18 @@ export class AppComponent implements OnInit {
         next: event => {
           switch (event.type) {
             case HttpEventType.UploadProgress || HttpEventType.DownloadProgress:
-              console.log(event);
+              this.fileStatus.percentage = Math.round(event.loaded / event.total! * 100);
+              this.fileStatus.status = 'progress';
+              console.log(this.fileStatus);
               break;
             case HttpEventType.Response:
-              console.log(event);
+              if (event.status === 200) {
+                this.fileStatus.percentage = 0;
+                this.fileStatus.status = 'done';
+                console.log(event);
+                console.log(this.fileStatus);
+              }
               break;
-
           }
         },
         error: err => console.log(err),

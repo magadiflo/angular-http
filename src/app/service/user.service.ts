@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpEvent, HttpResponse } from '@angular/common/http';
-import { Observable, tap, map } from 'rxjs';
+import { Observable, tap, map, retry } from 'rxjs';
 
 import { User } from '../interface/user';
 import { environment } from '../../environments/environment';
@@ -82,6 +82,13 @@ export class UserService {
   }
 
   //*********** RxJS Operators ***********/
+  getUsersRxJSRetry(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/users0000000`)//* haremos la url inválida para probar el retry
+      .pipe(
+        retry(3) //* Como la url es inválida, intentará 3 veces hacer peticiones y la 4ta vez ya mostrará error, que no se puede conectar
+      );
+  }
+
   getUsersRxJS(): Observable<User[]> {
     return this.http.get<User[]>(`${this.apiUrl}/users`)
       .pipe(

@@ -48,7 +48,8 @@ export class AppComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    this.getUsersRxJSRetry();
+    this.getUsersRxJSCatchError();
+    //this.getUsersRxJSRetry();
     //this.onGetUserRxJS();
     //this.onGetUsersRxJS();
 
@@ -156,6 +157,15 @@ export class AppComponent implements OnInit {
   }
 
   //*********** Llamando a funciones con RxJS Operators ***********/
+  getUsersRxJSCatchError(): void {
+    this.userService.getUsersRxJSCatchError()
+      .subscribe({
+        next: users => this.users = users,
+        error: err => console.log(err),
+        complete: () => console.log('Done getting users with rxjs operators')
+      });
+  }
+
   getUsersRxJSRetry(): void {
     this.userService.getUsersRxJSRetry()
       .subscribe({

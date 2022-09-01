@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpEvent, HttpResponse } from '@angular/common/http';
-import { Observable, tap, map, retry } from 'rxjs';
+import { Observable, tap, map, retry, catchError, of } from 'rxjs';
 
 import { User } from '../interface/user';
 import { environment } from '../../environments/environment';
@@ -82,6 +82,15 @@ export class UserService {
   }
 
   //*********** RxJS Operators ***********/
+  getUsersRxJSCatchError(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/users88`)
+      .pipe(
+        catchError((error: any) => {
+          return of([]);
+        })
+      );
+  }
+
   getUsersRxJSRetry(): Observable<User[]> {
     return this.http.get<User[]>(`${this.apiUrl}/users0000000`)//* haremos la url inválida para probar el retry
       .pipe(

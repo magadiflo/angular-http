@@ -1,5 +1,6 @@
 <label for="file-progress">File progress</label>
-<progress *ngIf="fileStatus.status === 'progress'" id="file-progress" max="100" [value]="fileStatus.percentage"></progress>
+<progress *ngIf="fileStatus.status === 'progress'" id="file-progress" max="100"
+    [value]="fileStatus.percentage"></progress>
 <br>
 <form>
     <label for="file">Selecciona archivo</label>
@@ -7,3 +8,35 @@
         <input type="file" multiple (change)="onUploadFile($any($event.target).files)" id="file">
     </div>
 </form>
+<hr>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h2>Users</h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Website</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users; let number = index">
+                        <th scope="row">#{{ number + 1 }}</th>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.phone }}</td>
+                        <td>{{ user.website }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -14,6 +14,7 @@ import { UserService } from './service/user.service';
 export class AppComponent implements OnInit {
 
   fileStatus = { status: '', percentage: 0 };
+  users: User[] = [];
 
   private user: User = {
     'id': 2,
@@ -156,7 +157,7 @@ export class AppComponent implements OnInit {
   onGetUsersRxJS(): void {
     this.userService.getUsersRxJS()
       .subscribe({
-        next: users => console.log(users),
+        next: users => this.users = users,
         error: err => console.log(err),
         complete: () => console.log('Done getting users with rxjs operators')
       });

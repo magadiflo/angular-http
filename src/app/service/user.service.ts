@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpEvent, HttpResponse } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, map } from 'rxjs';
 
 import { User } from '../interface/user';
 import { environment } from '../../environments/environment';
@@ -84,7 +84,8 @@ export class UserService {
   getUsersRxJS(): Observable<User[]> {
     return this.http.get<User[]>(`${this.apiUrl}/users`)
       .pipe(
-        tap(users => console.log(users))
+        tap(users => console.log(users)),
+        map(users => users.map(user => ({...user, name: user.name.toUpperCase()}))) //* el ...user tiene el name, pero como le agregamos otro name, este último lo sobreescribirá
       );
   }
   

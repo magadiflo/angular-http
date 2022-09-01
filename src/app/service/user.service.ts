@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams, HttpEvent, HttpResponse } from '@angular/common/http';
-import { Observable, tap, map, retry, catchError, of } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams, HttpEvent, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { Observable, tap, map, retry, catchError, of, throwError } from 'rxjs';
 
 import { User } from '../interface/user';
 import { environment } from '../../environments/environment';
@@ -85,9 +85,7 @@ export class UserService {
   getUsersRxJSCatchError(): Observable<User[]> {
     return this.http.get<User[]>(`${this.apiUrl}/users88`)
       .pipe(
-        catchError((error: any) => {
-          return of([]);
-        })
+        catchError(this.handleError) //* El error es pasado automáticamente a la función
       );
   }
 
@@ -125,5 +123,11 @@ export class UserService {
       );
   }
 
+  //* Observable<never>, Un Observable que no emite elementos al Observador y nunca se completa.
+  //* Nunca va a emitir otra cosa más que lanzar siempre el error
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    if(error.status === 404) return throwError(() => new Error('Error 404 occured'));
+    return throwError(() => new Error('Error desconocido....'));
+  }
 
 }

@@ -12,4 +12,5 @@ export interface User {
     company?:  Company;
 
     isAdmin?: boolean; //* Usando los operadores de RxJS agregamos una nueva propiedad. Propiedad que no viene del backend
+    image?: string;
 }

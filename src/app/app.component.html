@@ -19,6 +19,7 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">Image</th>
                         <th scope="col">Name</th>
                         <th scope="col">Username</th>
                         <th scope="col">Email</th>
@@ -30,6 +31,7 @@
                 <tbody>
                     <tr *ngFor="let user of users; let number = index">
                         <th scope="row">#{{ number + 1 }}</th>
+                        <td><img [src]="user.image" alt="{{user.name}}"></td>
                         <td>{{ user.name }}</td>
                         <td>{{ user.username }}</td>
                         <td>{{ user.email }}</td>

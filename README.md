@@ -13,3 +13,9 @@ Generar interfaces a partir de un objeto json. Para el tipado de los objetos.
 
 ## [Transform](https://transform.tools/json-to-typescript) - usado en el curso
 Generar interfaces a partir de un objeto json. Para el tipado de los objetos.
+
+## [Genera imágenes alatorios](https://robohash.org/)
+Genera una imágen diferente para cada palabra ingresada
+```
+https://robohash.org/administrador?set=set3
+```

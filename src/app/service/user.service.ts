@@ -11,6 +11,7 @@ import { environment } from '../../environments/environment';
 export class UserService {
 
   private readonly apiUrl: string = environment.apiUrl;
+  private readonly defaultImage = 'https://robohash.org';
 
   constructor(private http: HttpClient) { }
 
@@ -91,7 +92,8 @@ export class UserService {
           email: user.email,
           phone: user.phone,
           website: user.website,
-          isAdmin: user.id === 10
+          isAdmin: user.id === 10,
+          image: `${this.defaultImage}/${user.username}?set=set3`
         }))),
         tap(users => console.log(users)),
       );

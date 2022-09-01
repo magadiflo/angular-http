@@ -85,13 +85,17 @@ export class UserService {
     return this.http.get<User[]>(`${this.apiUrl}/users`)
       .pipe(
         tap(users => console.log(users)),
-        map(users => users.map(user => ({
-          ...user, 
-          name: user.name.toUpperCase(), //* el ...user tiene el name, pero como le agregamos otro name, este último lo sobreescribirá
+        map(users => users.map(user => ({ //* Filtramos únicamente las propiedades que necesitamos, excluyendo: Address, Company e id
+          name: user.name.toUpperCase(),
+          username: user.username,
+          email: user.email,
+          phone: user.phone,
+          website: user.website,
           isAdmin: user.id === 10
-        })))
+        }))),
+        tap(users => console.log(users)),
       );
   }
-  
+
 
 }

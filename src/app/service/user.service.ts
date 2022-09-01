@@ -93,9 +93,19 @@ export class UserService {
           phone: user.phone,
           website: user.website,
           isAdmin: user.id === 10,
-          image: `${this.defaultImage}/${user.username}?set=set3`
+          image: `${this.defaultImage}/${user.username}?set=set3`,
+          searchKey: [user.name, user.username],
         }))),
         tap(users => console.log(users)),
+      );
+  }
+
+  getUserRxJS(): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/users/1`)
+      .pipe(
+        map(user => {
+          return { ...user, isAdmin: true, searchKey: [user.name, user.username], }
+        })
       );
   }
 
